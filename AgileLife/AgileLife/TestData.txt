@@ -8,13 +8,19 @@
                     {
                         "title": "Blocked",
                         "tasks": [
+   
+                        ]
+                    },
+                    {
+                        "title": "Ready",
+                        "tasks": [
                             {
-                                "title": "get food",
+                                "title": "Add Sign In",
                                 "estimate": 1,
                                 "loggedHours": 0
                             },
                             {
-                                "title": "do work",
+                                "title": "Create Default Swim Lanes",
                                 "estimate": 2,
                                 "loggedHours": 0
                             }
@@ -24,13 +30,34 @@
                         "title": "In Progress",
                         "tasks": [
                             {
-                                "title": "pay ticket",
+                                "title": "View/Edit Item Details",
                                 "estimate": 1,
                                 "loggedHours": 0
                             },
                             {
-                                "title": "shower",
-                                "estimate": 2,
+                                "title": "Add Item",
+                                "estimate": 1,
+                                "loggedHours": 0
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Resolved",
+                        "tasks": [
+   
+                        ]
+                    },
+                    {
+                        "title": "Ready For Validation",
+                        "tasks": [
+                            {
+                                "title": "Show Board",
+                                "estimate": 1,
+                                "loggedHours": 0
+                            },
+                            {
+                                "title": "Allow Reordering",
+                                "estimate": 1,
                                 "loggedHours": 0
                             }
                         ]
@@ -39,7 +66,7 @@
                         "title": "Back Log",
                         "tasks": [
                             {
-                                "title": "exercise",
+                                "title": "Networking Code",
                                 "estimate": 1,
                                 "loggedHours": 0
                             }
