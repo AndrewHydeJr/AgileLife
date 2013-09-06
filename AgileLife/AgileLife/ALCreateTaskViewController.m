@@ -63,6 +63,14 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ACTIONS
+
 -(IBAction)saveButtonPressed:(id)sender
 {
     NSManagedObjectContext *context = [[ALCoreDataManager sharedInstance] threadDependentManagedObjectContext];
@@ -89,11 +97,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - UTILITIES
+
+#warning [AH] REFACTOR THIS INTO TASK+ADDITIONS
 
 +(Task *)getOrCreateTaskWithTitle:(NSString *)title forLane:(Lane *)lane inContext:(NSManagedObjectContext *)context
 {

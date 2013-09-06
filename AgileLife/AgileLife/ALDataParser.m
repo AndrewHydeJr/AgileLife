@@ -60,6 +60,9 @@
         completion([NSError errorWithDomain:@"Parsing - No dictionary Provided" code:1 userInfo:nil]);
 }
 
+#pragma mark - UTILITIES
+
+#warning [AH] REFACTOR THIS INTO ADDITIONS CATEGORY
 
 +(User *)getOrCreateUserWithName:(NSString *)name inContext:(NSManagedObjectContext *)context
 {

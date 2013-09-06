@@ -53,17 +53,20 @@
     self.navigationItem.rightBarButtonItem = item;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ACTIONS
+
 -(IBAction)addTicket:(id)sender
 {
     ALCreateTaskViewController *addTask = [[ALCreateTaskViewController alloc]init];
     addTask.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     addTask.board = self.currentBoard;
     [self presentViewController:addTask animated:YES completion:nil];
-}
-
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    [self loadData];
-    [refreshControl endRefreshing];
 }
 
 #pragma mark - SETTERS
@@ -74,10 +77,31 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - REFRESH CONTROL
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    [self loadData];
+    [refreshControl endRefreshing];
+}
+
+#pragma mark - LOADING
+
+-(void)reloadData
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [ALCoreDataManager fetchEntity:@"Board" withPredicate:nil completion:^(NSArray *array, NSError *error){
+        self.currentBoard = [array firstObject];
+        self.title = self.currentBoard.name;
+        self.currentBoard = self.currentBoard;
+        self.currentLanes = [self.currentBoard.lanes sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]];
+    }];
+}
+
+-(void)loadData
+{
+    NSDictionary *dict = [[self class] getDictionaryForFeed:@"TestData"];
+    [ALDataParser parseDictionary:dict withCompletion:^(NSError *error) {
+        [self reloadData];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -194,24 +218,6 @@
         dictionary = [NSJSONSerialization JSONObjectWithData:[fileText dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     
     return dictionary;
-}
-
--(void)reloadData
-{
-    [ALCoreDataManager fetchEntity:@"Board" withPredicate:nil completion:^(NSArray *array, NSError *error){
-        self.currentBoard = [array firstObject];
-        self.title = self.currentBoard.name;
-        self.currentBoard = self.currentBoard;
-        self.currentLanes = [self.currentBoard.lanes sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]]];
-    }];
-}
-
--(void)loadData
-{
-    NSDictionary *dict = [[self class] getDictionaryForFeed:@"TestData"];
-    [ALDataParser parseDictionary:dict withCompletion:^(NSError *error) {
-        [self reloadData];
-    }];
 }
 
 @end
