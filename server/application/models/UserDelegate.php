@@ -1,0 +1,9 @@
+<?
+class UserDelegate
+{
+	function save()
+	{
+		
+	}	
+}
+?>

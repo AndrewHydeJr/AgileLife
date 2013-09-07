@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AE074E2F-4B64-4403-ACE6-09ED13B27B5A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AgileLife</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8F365CA9-2D89-47E0-AA8F-DD4C64DEC1CB</key>
+		<string>https://github.com/AndrewHydeJr/AgileLife.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>AgileLife/AgileLife.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8F365CA9-2D89-47E0-AA8F-DD4C64DEC1CB</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AndrewHydeJr/AgileLife.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8F365CA9-2D89-47E0-AA8F-DD4C64DEC1CB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8F365CA9-2D89-47E0-AA8F-DD4C64DEC1CB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>agileLife</string>
+		</dict>
+	</array>
+</dict>
+</plist>
