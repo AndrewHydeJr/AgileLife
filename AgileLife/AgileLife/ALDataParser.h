@@ -12,6 +12,6 @@ typedef void (^DataParserBlock)(NSError *error);
 
 @interface ALDataParser : NSObject
 
-+(void)parseDictionary:(NSDictionary *)dictionary withCompletion:(DataParserBlock)completion;
++(void)parseFullUpdateDictionary:(NSDictionary *)dictionary withCompletion:(DataParserBlock)completion;
 
 @end
