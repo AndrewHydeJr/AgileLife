@@ -34,6 +34,9 @@
 		49E7B27717D9810C0037A5FD /* ALCreateTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B27617D9810C0037A5FD /* ALCreateTaskViewController.m */; };
 		49E7B27D17D988CF0037A5FD /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B27C17D988CF0037A5FD /* UIView+Additions.m */; };
 		49E7B28017D98C9F0037A5FD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B27F17D98C9F0037A5FD /* User.m */; };
+		49E7B28717DAB2BF0037A5FD /* ALTaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B28617DAB2BF0037A5FD /* ALTaskDetailViewController.m */; };
+		49E7B28C17DAB33C0037A5FD /* ALFeedManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B28B17DAB33C0037A5FD /* ALFeedManager.m */; };
+		49E7B28F17DAC3040037A5FD /* ALSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E7B28E17DAC3040037A5FD /* ALSignInViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,12 @@
 		49E7B27C17D988CF0037A5FD /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		49E7B27E17D98C9F0037A5FD /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		49E7B27F17D98C9F0037A5FD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		49E7B28517DAB2BF0037A5FD /* ALTaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTaskDetailViewController.h; sourceTree = "<group>"; };
+		49E7B28617DAB2BF0037A5FD /* ALTaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTaskDetailViewController.m; sourceTree = "<group>"; };
+		49E7B28A17DAB33C0037A5FD /* ALFeedManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALFeedManager.h; path = AgileLife/ALFeedManager.h; sourceTree = "<group>"; };
+		49E7B28B17DAB33C0037A5FD /* ALFeedManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALFeedManager.m; path = AgileLife/ALFeedManager.m; sourceTree = "<group>"; };
+		49E7B28D17DAC3040037A5FD /* ALSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSignInViewController.h; sourceTree = "<group>"; };
+		49E7B28E17DAC3040037A5FD /* ALSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSignInViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,8 +158,10 @@
 		49E7B21417D968F30037A5FD /* AgileLife */ = {
 			isa = PBXGroup;
 			children = (
-				49E7B27B17D988CF0037A5FD /* UIView+Additions.h */,
-				49E7B27C17D988CF0037A5FD /* UIView+Additions.m */,
+				49E7B28817DAB31D0037A5FD /* FeedManager */,
+				49E7B28417DAB26E0037A5FD /* SignIn */,
+				49E7B28217DAB2090037A5FD /* Categories */,
+				49E7B28117DAB1FB0037A5FD /* TaskDetails */,
 				49E7B27417D980F20037A5FD /* Create */,
 				49E7B27317D980E60037A5FD /* Board */,
 				49E7B24917D969D30037A5FD /* Core Data */,
@@ -224,14 +235,13 @@
 		49E7B25417D96E9D0037A5FD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				49E7B28317DAB21A0037A5FD /* Categories */,
 				49E7B25B17D96EBC0037A5FD /* Board.h */,
 				49E7B25C17D96EBC0037A5FD /* Board.m */,
 				49E7B25517D96EBB0037A5FD /* Task.h */,
 				49E7B25617D96EBB0037A5FD /* Task.m */,
 				49E7B26D17D97A1F0037A5FD /* Lane.h */,
 				49E7B26E17D97A1F0037A5FD /* Lane.m */,
-				49E7B27017D97BCE0037A5FD /* Lane+SortedTasks.h */,
-				49E7B27117D97BCE0037A5FD /* Lane+SortedTasks.m */,
 				49E7B27E17D98C9F0037A5FD /* User.h */,
 				49E7B27F17D98C9F0037A5FD /* User.m */,
 			);
@@ -264,6 +274,52 @@
 				49E7B27617D9810C0037A5FD /* ALCreateTaskViewController.m */,
 			);
 			name = Create;
+			sourceTree = "<group>";
+		};
+		49E7B28117DAB1FB0037A5FD /* TaskDetails */ = {
+			isa = PBXGroup;
+			children = (
+				49E7B28517DAB2BF0037A5FD /* ALTaskDetailViewController.h */,
+				49E7B28617DAB2BF0037A5FD /* ALTaskDetailViewController.m */,
+			);
+			name = TaskDetails;
+			sourceTree = "<group>";
+		};
+		49E7B28217DAB2090037A5FD /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				49E7B27B17D988CF0037A5FD /* UIView+Additions.h */,
+				49E7B27C17D988CF0037A5FD /* UIView+Additions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		49E7B28317DAB21A0037A5FD /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				49E7B27017D97BCE0037A5FD /* Lane+SortedTasks.h */,
+				49E7B27117D97BCE0037A5FD /* Lane+SortedTasks.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		49E7B28417DAB26E0037A5FD /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				49E7B28D17DAC3040037A5FD /* ALSignInViewController.h */,
+				49E7B28E17DAC3040037A5FD /* ALSignInViewController.m */,
+			);
+			name = SignIn;
+			sourceTree = "<group>";
+		};
+		49E7B28817DAB31D0037A5FD /* FeedManager */ = {
+			isa = PBXGroup;
+			children = (
+				49E7B28A17DAB33C0037A5FD /* ALFeedManager.h */,
+				49E7B28B17DAB33C0037A5FD /* ALFeedManager.m */,
+			);
+			name = FeedManager;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,12 +429,15 @@
 				49E7B25D17D96EBC0037A5FD /* Board.m in Sources */,
 				49E7B21F17D968F30037A5FD /* ALAppDelegate.m in Sources */,
 				49E7B27D17D988CF0037A5FD /* UIView+Additions.m in Sources */,
+				49E7B28F17DAC3040037A5FD /* ALSignInViewController.m in Sources */,
 				49E7B27217D97BCE0037A5FD /* Lane+SortedTasks.m in Sources */,
 				49E7B26317D970B70037A5FD /* ALBoardViewController.m in Sources */,
 				49E7B26717D971D60037A5FD /* ALDataParser.m in Sources */,
 				49E7B25717D96EBB0037A5FD /* Task.m in Sources */,
 				49E7B26F17D97A1F0037A5FD /* Lane.m in Sources */,
 				49E7B25217D96A5C0037A5FD /* ALCoreDataManager.m in Sources */,
+				49E7B28C17DAB33C0037A5FD /* ALFeedManager.m in Sources */,
+				49E7B28717DAB2BF0037A5FD /* ALTaskDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +650,7 @@
 				49E7B24217D968F30037A5FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		49E7B24317D968F30037A5FD /* Build configuration list for PBXNativeTarget "AgileLifeTests" */ = {
 			isa = XCConfigurationList;
@@ -599,6 +659,7 @@
 				49E7B24517D968F30037A5FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

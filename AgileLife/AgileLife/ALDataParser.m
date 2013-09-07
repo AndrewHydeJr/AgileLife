@@ -15,7 +15,7 @@
 
 @implementation ALDataParser
 
-+(void)parseDictionary:(NSDictionary *)dictionary withCompletion:(DataParserBlock)completion
++(void)parseFullUpdateDictionary:(NSDictionary *)dictionary withCompletion:(DataParserBlock)completion
 {
     NSManagedObjectContext *context = [[ALCoreDataManager sharedInstance] threadDependentManagedObjectContext];
     

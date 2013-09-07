@@ -99,7 +99,7 @@
 -(void)loadData
 {
     NSDictionary *dict = [[self class] getDictionaryForFeed:@"TestData"];
-    [ALDataParser parseDictionary:dict withCompletion:^(NSError *error) {
+    [ALDataParser parseFullUpdateDictionary:dict withCompletion:^(NSError *error) {
         [self reloadData];
     }];
 }
