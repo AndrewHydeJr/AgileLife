@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class user extends CI_Controller {
+class board extends CI_Controller {
 
-	function user(){
+	function board(){
 		parent::__construct();
 		$this->load->model("BaseVo");
 		$this->load->model("BaseDao");
-		$this->load->model("user/UserVo");		
-		$this->load->model("user/UserDao");
+		$this->load->model("board/BoardVo");		
+		$this->load->model("board/BoardDao");
 		$this->load->model("Utils");
 		$this->load->model("Result");
 	}
@@ -20,43 +20,43 @@ class user extends CI_Controller {
 	}
 	
 	
-	public function save($user=null)
+	public function save($board=null)
 	{		
-		$userDao = new UserDao();
-		if($user)
+		$boardDao = new BoardDao();
+		if($board)
 		{
-			return $userDao->save($user);
+			return $boardDao->save($board);
 		}
 		else
 		{
 			//get values from post params
 		}
 		
-	}	
+	}
 	
 	public function saveTest($create=1)
 	{
-		$user = 0;
+		$board = 0;
 		if($create)
 		{
-			$user = new UserVo();		
-			$user->name = "do something awesome";			
+			$board = new BoardVo();		
+			$board->name = "this is a board";			
 		}
 		else
 		{
-			$user = new UserVo();		
-			$user->guid = "{9BEFE6A4-C0D3-71F7-31A3-020035E39C4C}";
-			$user->name = "code";
+			$board = new BoardVo();		
+			$board->guid = "{AE7D169A-70C1-D224-024F-23B7BBE168C1}";
+			$board->name = "this is an updated board!!";
 		}
 		
-		$result = $this->save($user);
+		$result = $this->save($board);
 		return $result;
 	}	
 	
 	public function fetch()
 	{
-		$userDao = new UserDao();
-		return $userDao->fetch();		
+		$boardDao = new BoardDao();
+		return $boardDao->fetch();		
 	}
 	
 	public function fetchTest()
@@ -77,18 +77,17 @@ class user extends CI_Controller {
 	
 	public function delete($guid)
 	{
-		$userDao = new UserDao();
-		return $userDao->delete($guid);
+		$boardDao = new BoardDao();
+		return $boardDao->delete($guid);
 	}
 	
 	public function deleteTest()
 	{
-		return $this->delete("{66D3CDC3-5799-791D-CB66-6D20CDC39427}");
+		return $this->delete("{AE7D169A-70C1-D224-024F-23B7BBE168C1}");
 	}
 	
-	
-	
+	public function saveBoardToUserId($userId, $board)
+	{
+		$boardDao->saveBoardToUserId($userId, $board);
+	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

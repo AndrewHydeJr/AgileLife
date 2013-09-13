@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class user extends CI_Controller {
+class lane extends CI_Controller {
 
-	function user(){
+	function lane(){
 		parent::__construct();
 		$this->load->model("BaseVo");
 		$this->load->model("BaseDao");
-		$this->load->model("user/UserVo");		
-		$this->load->model("user/UserDao");
+		$this->load->model("lane/LaneVo");		
+		$this->load->model("lane/LaneDao");
 		$this->load->model("Utils");
 		$this->load->model("Result");
 	}
@@ -20,43 +20,43 @@ class user extends CI_Controller {
 	}
 	
 	
-	public function save($user=null)
+	public function save($lane=null)
 	{		
-		$userDao = new UserDao();
-		if($user)
+		$laneDao = new LaneDao();
+		if($lane)
 		{
-			return $userDao->save($user);
+			return $laneDao->save($lane);
 		}
 		else
 		{
 			//get values from post params
 		}
 		
-	}	
+	}
 	
 	public function saveTest($create=1)
 	{
-		$user = 0;
+		$lane = 0;
 		if($create)
 		{
-			$user = new UserVo();		
-			$user->name = "do something awesome";			
+			$lane = new LaneVo();		
+			$lane->name = "this is a lane";			
 		}
 		else
 		{
-			$user = new UserVo();		
-			$user->guid = "{9BEFE6A4-C0D3-71F7-31A3-020035E39C4C}";
-			$user->name = "code";
+			$lane = new LaneVo();		
+			$lane->guid = "{AE7D169A-70C1-D224-024F-23B7BBE168C1}";
+			$lane->name = "this is an updated lane!!";
 		}
 		
-		$result = $this->save($user);
+		$result = $this->save($lane);
 		return $result;
 	}	
 	
 	public function fetch()
 	{
-		$userDao = new UserDao();
-		return $userDao->fetch();		
+		$laneDao = new LaneDao();
+		return $laneDao->fetch();		
 	}
 	
 	public function fetchTest()
@@ -77,16 +77,14 @@ class user extends CI_Controller {
 	
 	public function delete($guid)
 	{
-		$userDao = new UserDao();
-		return $userDao->delete($guid);
+		$laneDao = new LaneDao();
+		return $laneDao->delete($guid);
 	}
 	
 	public function deleteTest()
 	{
-		return $this->delete("{66D3CDC3-5799-791D-CB66-6D20CDC39427}");
+		return $this->delete("{AE7D169A-70C1-D224-024F-23B7BBE168C1}");
 	}
-	
-	
 	
 }
 

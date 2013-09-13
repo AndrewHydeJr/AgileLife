@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'agileLife';
-$db['default']['password'] = 'password';
+$db['default']['password'] = 'sa6t7freYE';
 $db['default']['database'] = 'agileLife';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

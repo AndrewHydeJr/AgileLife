@@ -48,5 +48,30 @@ $route["fetch/usersTest"] = "user/fetchTest";
 $route["delete/user/(:any)"] = "user/delete/$1";
 $route["delete/userDeleteTest"] = "user/deleteTest";
 
+$route["save/board"] = 'user/board';
+$route["save/board/createTest"] = 'board/saveTest/1';
+$route["save/board/updateTest"] = 'board/saveTest/0';
+$route["fetch/boards"] = "board/fetch";
+$route["fetch/boardTest"] = "board/fetchTest";
+$route["delete/board/(:any)"] = "board/delete/$1";
+$route["delete/boardDeleteTest"] = "board/deleteTest";
+
+$route["save/lane"] = 'user/lane';
+$route["save/lane/createTest"] = 'lane/saveTest/1';
+$route["save/lane/updateTest"] = 'lane/saveTest/0';
+$route["fetch/lanes"] = "lane/fetch";
+$route["fetch/laneTest"] = "lane/fetchTest";
+$route["delete/lane/(:any)"] = "lane/delete/$1";
+$route["delete/laneDeleteTest"] = "lane/deleteTest";
+
+$route["save/task"] = 'user/task';
+$route["save/task/createTest"] = 'task/saveTest/1';
+$route["save/task/updateTest"] = 'task/saveTest/0';
+$route["fetch/tasks"] = "task/fetch";
+$route["fetch/taskTest"] = "task/fetchTest";
+$route["delete/task/(:any)"] = "task/delete/$1";
+$route["delete/taskDeleteTest"] = "task/deleteTest";
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
