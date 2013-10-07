@@ -4,12 +4,14 @@ class board extends CI_Controller {
 
 	function board(){
 		parent::__construct();
-		$this->load->model("BaseVo");
-		$this->load->model("BaseDao");
-		$this->load->model("board/BoardVo");		
-		$this->load->model("board/BoardDao");
-		$this->load->model("Utils");
-		$this->load->model("Result");
+		$this->load->model("baseVo");
+		$this->load->model("baseDao");
+		$this->load->model("board/boardVo");		
+		$this->load->model("board/boardDao");
+		$this->load->model("task/taskVo");		
+		$this->load->model("task/taskDao");
+		$this->load->model("utils");
+		$this->load->model("result");
 	}
 
 	public function index()
@@ -33,7 +35,7 @@ class board extends CI_Controller {
 		}
 		
 	}
-	
+
 	public function saveTest($create=1)
 	{
 		$board = 0;
@@ -86,8 +88,28 @@ class board extends CI_Controller {
 		return $this->delete("{AE7D169A-70C1-D224-024F-23B7BBE168C1}");
 	}
 	
-	public function saveBoardToUserId($userId, $board)
+	public function saveTaskForBoard($task, $boardId)
 	{
-		$boardDao->saveBoardToUserId($userId, $board);
+		if($boardId)
+		{
+			$taskDao = new TaskDao();			
+			$result = $taskDao->save($task);
+			$task->id = $result->data->id;
+			
+			$boardDao = new BoardDao();
+			$result = $boardDao->saveTaskForBoard($task, $boardId);
+			
+			return $result;
+		}
+
+	}	
+	
+	public function saveTaskForBoardTest()
+	{
+		$boardId = 21;
+		$task = new TaskVo();
+		$task->name = "do something awesome.";
+		$result = $this->saveTaskForBoard($task, $boardId);
 	}
+		
 }

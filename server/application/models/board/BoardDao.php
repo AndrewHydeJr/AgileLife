@@ -4,7 +4,8 @@ class BoardDao extends BaseDao
 	public function __construct() 
 	{		
 		parent::__construct();
-		$this->tableName = "Board";
+		$this->tableName = "Board";		
+		$this->boardTaskTable = "BoardTask";
     }
 
 	public function save($board)
@@ -28,6 +29,14 @@ class BoardDao extends BaseDao
 		
 		$result = new Result();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($board));
+		
+		$query = $this->db->get_where($this->tableName, array('guid' => $board->guid), 1, 0);
+		if($query->num_rows())
+		{
+			$row = $query->row();
+			$board->id = $row->id;
+		}
+		
 		$result->data = $board;
 	
 		return $result;
@@ -45,20 +54,9 @@ class BoardDao extends BaseDao
 	
 	public function getDataFromObject($object)
 	{
-		$data = array(			
-			'guid' => $object->guid,			
-			'dateUpdated' => $object->dateUpdated
-            );
-           
-        if($object->id)
-        	$data['id'] = $object->id;
+		$data = $this->getBaseDataFromObject($object);
 		if($object->name)
-			$data['name'] = $object->name;
-        if($object->dateCreated)
-        	$data['dateCreated'] = $object->dateCreated;
-        if($object->deleted)
-        	$data['deleted'] = $object->deleted;
-            
+			$data['name'] = $object->name;            
 		return $data;
 	}
 	
@@ -97,12 +95,20 @@ class BoardDao extends BaseDao
 		
 	}
 	
-	public function saveBoardToUserId($userId, $board)
+	public function saveTaskForBoard($task, $boardId)
 	{
-		//if !board id then save board
-		
-		//insert row into UserBoard
+		$data = array(
+		   'boardId' => $boardId,
+		   'taskId' => $task->id,
+		   'status' => $task->status,
+		   'priority' => $task->priority
+		);
+		$result = new Result();
+		$result->status = $this->db->insert($this->boardTaskTable, $data);
+		$result->data = 0;
+		return $result;
 	}
-
+	
+	
 }
 ?>

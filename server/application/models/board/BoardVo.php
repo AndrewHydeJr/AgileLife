@@ -1,14 +1,14 @@
 <?
 class BoardVo extends BaseVo
 {
-	public $boardId;
-	public $guid;
 	public $name;
+	public $tasks;
 	
 	
 	public function __construct() 
 	{
 		parent::__construct(); 
+		$this->tasks = array();
     } 
 	
 	

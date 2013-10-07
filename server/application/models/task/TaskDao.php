@@ -24,10 +24,16 @@ class TaskDao extends BaseDao
 	{		
 		$task->guid = Utils::getGUID();
 		$task->dateCreated = time();
-
 		
 		$result = new Result();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($task));
+		
+		$query = $this->db->get_where($this->tableName, array('guid' => $task->guid), 1, 0);
+		if($query->num_rows())
+		{
+			$row = $query->row();
+			$task->id = $row->id;
+		}
 		$result->data = $task;
 	
 		return $result;
@@ -45,20 +51,9 @@ class TaskDao extends BaseDao
 	
 	public function getDataFromObject($object)
 	{
-		$data = array(			
-			'guid' => $object->guid,			
-			'dateUpdated' => $object->dateUpdated
-            );
-           
-        if($object->id)
-        	$data['id'] = $object->id;
+		$data = $this->getBaseDataFromObject($object);
 		if($object->name)
 			$data['name'] = $object->name;
-        if($object->dateCreated)
-        	$data['dateCreated'] = $object->dateCreated;
-        if($object->deleted)
-        	$data['deleted'] = $object->deleted;
-            
 		return $data;
 	}
 	

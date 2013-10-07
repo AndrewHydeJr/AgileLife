@@ -2,14 +2,20 @@
 
 class user extends CI_Controller {
 
-	function user(){
+	function user()
+	{
 		parent::__construct();
-		$this->load->model("BaseVo");
-		$this->load->model("BaseDao");
-		$this->load->model("user/UserVo");		
-		$this->load->model("user/UserDao");
-		$this->load->model("Utils");
-		$this->load->model("Result");
+		$this->load->model("baseVo");
+		$this->load->model("baseDao");
+		$this->load->model("user/userVo");		
+		$this->load->model("user/userDao");
+		$this->load->model("board/boardVo");
+		$this->load->model("board/boardDao");
+		$this->load->model("task/taskVo");
+		$this->load->model("task/taskDao");
+		$this->load->model("utils");
+		$this->load->model("result");
+		$this->load->helper('form');
 	}
 
 	public function index()
@@ -19,21 +25,64 @@ class user extends CI_Controller {
 		
 	}
 	
-	
-	public function save($user=null)
+	public function save($user = null)
 	{		
-		$userDao = new UserDao();
-		if($user)
+		if(!$user)
 		{
-			return $userDao->save($user);
-		}
-		else
-		{
-			//get values from post params
+			$jsonData = $this->input->get_post("jsonData");
+			
+			$data = json_decode($jsonData);
+			
+			$user = new UserVo();
+			$user->name = $data->name;
+			if(count($data->boards))
+			{
+				foreach($data->boards as $boardJson)
+				{
+					$board = new BoardVo();
+					$board->name = $boardJson->name;
+					
+					if(count($boardJson->tasks))
+					{
+						foreach($boardJson->tasks as $taskJson)
+						{
+							$task = new TaskVo();
+							$task->name = $taskJson->name;
+							$task->status = $taskJson->status;
+							$task->priority = $taskJson->priority;
+							array_push($board->tasks, $task);
+						}
+					}
+				
+					array_push($user->boards, $board);
+				}
+			}
 		}
 		
+		$userDao = new UserDao();
+		
+		$saveResult = $userDao->save($user);
+		$user->id = $saveResult->data->id;
+				
+		if(count($user->boards))
+		{
+			foreach($user->boards as $board)
+			{
+				$boardDao = new BoardDao();
+				$this->saveBoardForUser($user->id, $board);
+				if($board->tasks){
+					foreach($board->tasks as $task)
+					{
+						$taskDao = new TaskDao();
+						$this->saveTaskForBoard($task, $board->id);
+					}	
+				}				
+			}
+		}
+		
+		return  $user;			
 	}	
-	
+
 	public function saveTest($create=1)
 	{
 		$user = 0;
@@ -56,7 +105,17 @@ class user extends CI_Controller {
 	public function fetch()
 	{
 		$userDao = new UserDao();
-		return $userDao->fetch();		
+		return $userDao->fetch();
+	}
+	
+	public function fetchById($userId)
+	{
+		$head['title'] = "user detail";
+		
+		$userDao = new UserDao();	
+		$data["user"] = $userDao->fetchById($userId);
+		
+		$this->load->view('user/userDetail', $data);
 	}
 	
 	public function fetchTest()
@@ -86,9 +145,44 @@ class user extends CI_Controller {
 		return $this->delete("{66D3CDC3-5799-791D-CB66-6D20CDC39427}");
 	}
 	
+	//board for user
+	public function saveBoardForUser($userId, $board)
+	{
+		
+		if($board)
+		{
+			$userDao = new UserDao();
+			$boardDao = new BoardDao();
+			$result = $boardDao->save($board);
+			$board->id = $result->data->id;
+			$result = $userDao->saveBoardForUser($board, $userId);
+			
+			return $result;
+		}
+		
+	}
+	
+	public function saveBoardForUserTest()
+	{
+		$userId = 25;
+		$board = new BoardVo();
+		$board->name = "chris's board.";
+		$result = $this->saveBoardForUser($userId, $board);
+	}
+	
+	
+	//task for board
+	public function saveTaskForBoard($task, $boardId)
+	{
+		$taskDao = new TaskDao();
+		$result = $taskDao->save($task);
+		$task->id = $result->data->id;
+		
+		$boardDao = new BoardDao();
+		$result = $boardDao->saveTaskForBoard($task,$boardId);
+			
+	}
+	
 	
 	
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

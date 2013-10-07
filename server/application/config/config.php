@@ -26,8 +26,8 @@ $config['base_url']	= 'http://agileLife';
 | variable so that it is blank.
 |
 */
+//$config['index_page'] = 'index.php';
 $config['index_page'] = 'index.php';
-
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'e262Gv9a9U5khor47Rl6EOmTADWQwhBK';
 
 /*
 |--------------------------------------------------------------------------

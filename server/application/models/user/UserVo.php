@@ -1,15 +1,13 @@
 <?
-class UserVo extends BaseVo
+class UserVo extends baseVo
 {
-	public $userId;
-	public $guid;
 	public $name;
 	public $boards;
 	
 	
 	public function __construct()
 	{
-		parent::__construct(); 
+		parent::__construct();
 		$this->boards = array();
     } 
 	
