@@ -1,23 +1,21 @@
 
 url:  /user/save
 
-{
-"name" : "chris 1",
-"boards" : [
-	{"name" : "board 1"},
-	{"tasks" : [
-		{"name":"first task"}
-		]}
-	]
-}
-
 
 {
     "name": "chris 1",
     "boards": [
         {
             "name": "board 1",
-            "tasks": [{"name":"task one!!", "status":2, "priority":3}]
+            "tasks": [
+                {
+                    "name": "task one!!",
+                    "status": 2,
+                    "sortOrder": 3
+                }
+            ]
         }
     ]
 }
+
+

@@ -12,7 +12,7 @@ class UserDao extends BaseDao
 		$result = 0;
 		$user->dateUpdated = time();
 		
-		if($user->guid)		
+		if($user->id)		
 			$result = $user = $this->update($user);
 		else
 			$result = $this->insert($user);
@@ -22,10 +22,8 @@ class UserDao extends BaseDao
 	
 	public function insert($user)
 	{		
-		$user->guid = Utils::getGUID();
 		$user->dateCreated = time();
 
-		
 		$result = new Result();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
@@ -35,7 +33,7 @@ class UserDao extends BaseDao
 	
 	public function update($user)
 	{		
-		$this->db->where('guid', $user->guid);
+		$this->db->where('id', $user->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
@@ -46,7 +44,7 @@ class UserDao extends BaseDao
 	public function getDataFromObject($object)
 	{
 		$data = array(			
-			'guid' => $object->guid,			
+			'id' => $object->id,			
 			'dateUpdated' => $object->dateUpdated
             );
            
@@ -81,14 +79,14 @@ class UserDao extends BaseDao
 		return $result;
 	}
 	
-	public function delete($guid)
+	public function delete($id)
 	{
 		$user = new UserVo();
-		$user->guid = $guid;
+		$user->id = $id;
 		$user->deleted = 1;
 		$user->dateUpdated = time();
 		
-		$this->db->where('guid', $user->guid);
+		$this->db->where('id', $user->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;

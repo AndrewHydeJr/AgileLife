@@ -7,12 +7,12 @@
 
 <form action="http://agileLife/save/user" method="post" >
 	<input type="text" name="path" size="70" />
-	
+	<input type="submit" value="post"  />
 	<br /><br />
 	
 	<textarea name="jsonBody" rows="35" cols="65"></textarea>
 	<br /><br />
-	<input type="submit" value="post"  />
+	
 </form>
 
 

@@ -1,10 +1,10 @@
 <?
-class BoardVo extends BaseVo
+class TaskBoardVo extends BaseVo
 {
-	public $name;
-	public $tasks;
-	public $boardUserId;
-	
+	public $boardId;
+	public $taskId;
+	public $status;
+	public $sortOrder;	
 	
 	public function __construct() 
 	{
@@ -13,6 +13,6 @@ class BoardVo extends BaseVo
     } 
 	
 	
-	 
+	
 }
 ?>

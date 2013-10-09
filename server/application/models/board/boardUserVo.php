@@ -1,12 +1,16 @@
 <?
-class UserVo extends BaseVo
+class BoardUserVo extends BaseVo
 {
 	public $userId;
-	public $name;
+	public $boardId;
+	
 	
 	public function __construct() 
 	{
 		parent::__construct(); 
     } 
+	
+	
+	
 }
 ?>

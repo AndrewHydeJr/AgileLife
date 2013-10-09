@@ -12,7 +12,7 @@ class LaneDao extends BaseDao
 		$result = 0;
 		$lane->dateUpdated = time();
 		
-		if($lane->guid)		
+		if($lane->id)		
 			$result = $lane = $this->update($lane);
 		else
 			$result = $this->insert($lane);
@@ -22,7 +22,7 @@ class LaneDao extends BaseDao
 	
 	public function insert($lane)
 	{		
-		$lane->guid = Utils::getGUID();
+		$lane->id = Utils::getid();
 		$lane->dateCreated = time();
 
 		
@@ -35,7 +35,7 @@ class LaneDao extends BaseDao
 	
 	public function update($lane)
 	{		
-		$this->db->where('guid', $lane->guid);
+		$this->db->where('id', $lane->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($lane));
 		$result->data = $lane;
@@ -46,7 +46,7 @@ class LaneDao extends BaseDao
 	public function getDataFromObject($object)
 	{
 		$data = array(			
-			'guid' => $object->guid,			
+			'id' => $object->id,			
 			'dateUpdated' => $object->dateUpdated
             );
            
@@ -81,14 +81,14 @@ class LaneDao extends BaseDao
 		return $result;
 	}
 	
-	public function delete($guid)
+	public function delete($id)
 	{
 		$lane = new LaneVo();
-		$lane->guid = $guid;
+		$lane->id = $id;
 		$lane->deleted = 1;
 		$lane->dateUpdated = time();
 		
-		$this->db->where('guid', $lane->guid);
+		$this->db->where('id', $lane->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($lane));
 		$result->data = $lane;

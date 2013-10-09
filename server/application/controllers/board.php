@@ -97,7 +97,7 @@ class board extends CI_Controller {
 			$task->id = $result->data->id;
 			
 			$boardDao = new BoardDao();
-			$result = $boardDao->saveTaskForBoard($task, $boardId);
+			$result = $taskDao->saveTaskBoard($task, $boardId);
 			
 			return $result;
 		}

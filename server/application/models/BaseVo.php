@@ -2,7 +2,6 @@
 class BaseVo
 {
 	public $id;
-	public $guid;
 	public $createdBy;
 	public $dateCreated;
 	public $updatedBy;

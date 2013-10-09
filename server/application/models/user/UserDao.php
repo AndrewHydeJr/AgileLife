@@ -12,31 +12,28 @@ class UserDao extends BaseDao
 	{				
 		$result = 0;
 		$user->dateUpdated = time();
-		
-		if($user->guid)		
+		if($user->id)
 			$result = $user = $this->update($user);
 		else
 			$result = $this->insert($user);
-			
+
 		return $result;
 	}
 	
 	public function insert($user)
 	{		
-		$user->guid = Utils::getGUID();
 		$user->dateCreated = time();
 
 		
 		$result = new Result();
+		
+		$this->db->trans_start();
+				
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($user));
+		$user->id = $this->db->insert_id();
 		
-		$query = $this->db->get_where($this->tableName, array('guid' => $user->guid), 1, 0);
-		if($query->num_rows())
-		{
-			$row = $query->row();
-			$user->id = $row->id;
-		}
-		
+		$this->db->trans_complete();
+
 		$result->data = $user;
 	
 		return $result;
@@ -44,7 +41,7 @@ class UserDao extends BaseDao
 	
 	public function update($user)
 	{		
-		$this->db->where('guid', $user->guid);
+		$this->db->where('id', $user->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
@@ -104,7 +101,7 @@ class UserDao extends BaseDao
 	{
 		$boards = array();
 		$boardQuery = $this->db->query(
-										"SELECT b.id, b.guid, b.name, b.createdBy, b.dateCreated, b.updatedBy, b.dateUpdated, b.deleted ".
+										"SELECT b.id, ub.id as boardUserId, b.id, b.name, b.createdBy, b.dateCreated, b.updatedBy, b.dateUpdated, b.deleted ".
 										"FROM board b INNER JOIN UserBoard ub on b.id = ub.boardId ".
 										"AND ub.userId = ".$userId
 										);
@@ -116,7 +113,8 @@ class UserDao extends BaseDao
 				$board = new BoardVo();
 				$board = $this->setBaseProperties($board, $boardRow);
 				$board->name = $boardRow->name;				
-				$board->tasks = $this->fetchTasksByBoardId($board->id);				
+				$board->tasks = $this->fetchTasksByBoardId($board->id);
+				$board->boardUserId = $boardRow->boardUserId;
 				array_push($boards, $board);			
 			}
 		}
@@ -128,7 +126,8 @@ class UserDao extends BaseDao
 	{
 		$tasks = array();
 		$tasksQuery = $this->db->query(
-										"SELECT t.id, t.guid, t.name, t.createdBy, t.dateCreated, t.updatedBy, t.dateUpdated, t.deleted, bt.status, bt.priority ".
+										"SELECT t.id, bt.id as taskBoardId, t.name, t.createdBy, t.dateCreated, t.updatedBy, t.dateUpdated, ".
+										"t.deleted, bt.status, bt.sortOrder ".
 										"FROM Task t INNER JOIN BoardTask bt on t.id = bt.taskId ".
 										"AND bt.boardId = ".$boardId
 										);
@@ -141,21 +140,22 @@ class UserDao extends BaseDao
 				$task = $this->setBaseProperties($task, $taskRow);
 				$task->name = $taskRow->name;
 				$task->status = $taskRow->status;
-				$task->priority = $taskRow->priority;
+				$task->sortOrder = $taskRow->sortOrder;
+				$task->taskBoardId = $taskRow->taskBoardId;
 				array_push($tasks, $task);
 			}
 		}
 		return $tasks;
 	}
 	
-	public function delete($guid)
+	public function delete($id)
 	{
 		$user = new UserVo();
-		$user->guid = $guid;
+		$user->id = $id;
 		$user->deleted = 1;
 		$user->dateUpdated = time();
 		
-		$this->db->where('guid', $user->guid);
+		$this->db->where('id', $user->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
@@ -163,19 +163,6 @@ class UserDao extends BaseDao
 		return $result;
 		
 	}
-	
-	public function saveBoardForUser($board, $userId)
-	{
-		$data = array(
-		   'userId' => $userId ,
-		   'boardId' => $board->id
-		);
-		$result = new Result();
-		$result->status = $this->db->insert($this->userBoardTable, $data);
-		$result->data = 0;
-		return $result;
-	}
-
 
 }
 ?>

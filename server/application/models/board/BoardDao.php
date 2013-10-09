@@ -5,37 +5,32 @@ class BoardDao extends BaseDao
 	{		
 		parent::__construct();
 		$this->tableName = "Board";		
-		$this->boardTaskTable = "BoardTask";
+		$this->boardUserTable = "UserBoard";
     }
 
 	public function save($board)
-	{				
+	{
 		$result = 0;
 		$board->dateUpdated = time();
-		
-		if($board->guid)		
-			$result = $board = $this->update($board);
+
+		if($board->id)		
+			$result = $this->update($board);
 		else
 			$result = $this->insert($board);
-			
+
 		return $result;
 	}
 	
 	public function insert($board)
 	{		
-		$board->guid = Utils::getGUID();
 		$board->dateCreated = time();
 
-		
 		$result = new Result();
-		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($board));
 		
-		$query = $this->db->get_where($this->tableName, array('guid' => $board->guid), 1, 0);
-		if($query->num_rows())
-		{
-			$row = $query->row();
-			$board->id = $row->id;
-		}
+		$this->db->trans_start();
+		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($board));
+		$board->id = $this->db->insert_id();
+		$this->db->trans_complete();
 		
 		$result->data = $board;
 	
@@ -44,7 +39,7 @@ class BoardDao extends BaseDao
 	
 	public function update($board)
 	{		
-		$this->db->where('guid', $board->guid);
+		$this->db->where('id', $board->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($board));
 		$result->data = $board;
@@ -79,14 +74,14 @@ class BoardDao extends BaseDao
 		return $result;
 	}
 	
-	public function delete($guid)
+	public function delete($id)
 	{
 		$board = new BoardVo();
-		$board->guid = $guid;
+		$board->id = $id;
 		$board->deleted = 1;
 		$board->dateUpdated = time();
 		
-		$this->db->where('guid', $board->guid);
+		$this->db->where('id', $board->id);
 		$result = new Result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($board));
 		$result->data = $board;
@@ -95,20 +90,54 @@ class BoardDao extends BaseDao
 		
 	}
 	
-	public function saveTaskForBoard($task, $boardId)
+	// BOARD USER
+	public function saveBoardUser($boardUser)
 	{
-		$data = array(
-		   'boardId' => $boardId,
-		   'taskId' => $task->id,
-		   'status' => $task->status,
-		   'priority' => $task->priority
-		);
-		$result = new Result();
-		$result->status = $this->db->insert($this->boardTaskTable, $data);
-		$result->data = 0;
+		if($boardUser->id)
+			$result = $this->updateBoardUser($boardUser);
+		else
+			$result = $this->insertBoardUser($boardUser);
 		return $result;
 	}
 	
+	public function updateBoardUser($boardUser)
+	{
+		$result = new Result();
+		$result->status = $this->db->update($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
+		
+		$result->data = $boardUser;
+	}
+	
+	public function insertBoardUser($boardUser)
+	{
+		$boardUser->dateCreated = time();
+
+		$result = new Result();
+		$result->status = $this->db->insert($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
+		
+		$query = $this->db->get_where($this->boardUserTable, array('id' => $boardUser->id), 1, 0);
+		if($query->num_rows())
+		{
+			$row = $query->row();
+			$boardUser->id = $row->id;
+		}
+		
+		$result->data = $boardUser;
+		
+		return $result;
+	}
+	
+	public function getDataFromBoardUser($object)
+	{
+		$data = $this->getBaseDataFromObject($object);
+		if($object->userId)
+			$data['userId'] = $object->userId;
+		if($object->boardId)
+			$data['boardId'] = $object->boardId;
+		return $data;
+	}
+	
+		
 	
 }
 ?>

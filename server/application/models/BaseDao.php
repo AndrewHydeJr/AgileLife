@@ -5,13 +5,12 @@ class BaseDao extends CI_Model
 	
 	public function __construct() 
 	{
-		//echo "in BaseDao constructor <br>";
+
     }
     
     public function setBaseProperties($object, $row)
     {	    
 		$object->id = $row->id;
-		$object->guid = $row->guid;
 		$object->createdBy = $row->createdBy;
 		$object->dateCreated = $row->dateCreated;
 		$object->updatedBy = $row->updatedBy;
@@ -26,8 +25,6 @@ class BaseDao extends CI_Model
         $data = array();
         if($object->id)
         	$data['id'] = $object->id;
-        if($object->guid)
-        	$data['guid'] = $object->guid;
         if($object->createdBy)
         	$data['createdBy'] = $object->createdBy;        
         if($object->dateCreated)

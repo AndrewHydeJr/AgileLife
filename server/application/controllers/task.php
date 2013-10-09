@@ -14,12 +14,9 @@ class task extends CI_Controller {
 
 	public function index()
 	{
-		//$this->load->view('welcome_message');
-		
 		
 	}
-	
-	
+		
 	public function save($task=null)
 	{		
 		$taskDao = new TaskDao();
@@ -34,57 +31,19 @@ class task extends CI_Controller {
 		
 	}
 	
-	public function saveTest($create=1)
-	{
-		$task = 0;
-		if($create)
-		{
-			$task = new TaskVo();		
-			$task->name = "this is a task";			
-		}
-		else
-		{
-			$task = new TaskVo();		
-			$task->guid = "{AE7D169A-70C1-D224-024F-23B7BBE168C1}";
-			$task->name = "this is an updated task!!";
-		}
-		
-		$result = $this->save($task);
-		return $result;
-	}	
-	
 	public function fetch()
 	{
 		$taskDao = new TaskDao();
 		return $taskDao->fetch();		
 	}
 	
-	public function fetchTest()
-	{
-		$result = $this->fetch();
-
-		if ($result->data->num_rows() > 0)
-		{
-		   foreach ($result->data->result() as $row)
-		   {
-		      echo $row->name;
-		      echo $row->dateUpdated;
-		      echo $row->guid;
-		      echo "<br><br>";
-		   }
-		}
-	}
 	
-	public function delete($guid)
+	public function delete($id)
 	{
 		$taskDao = new TaskDao();
 		return $taskDao->delete($guid);
 	}
 	
-	public function deleteTest()
-	{
-		return $this->delete("{AE7D169A-70C1-D224-024F-23B7BBE168C1}");
-	}
 	
 }
 

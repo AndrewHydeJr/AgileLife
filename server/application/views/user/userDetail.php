@@ -1,3 +1,3 @@
 <h3>user detail</h3>
 
-<?=json_encode($user)?>
+<textarea cols="110" rows="50"><?=json_encode($user)?></textarea>
