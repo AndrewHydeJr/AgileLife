@@ -1,5 +1,5 @@
-<?
-class TaskBoardVo extends BaseVo
+<?php
+class task_board_vo extends base_vo
 {
 	public $boardId;
 	public $taskId;

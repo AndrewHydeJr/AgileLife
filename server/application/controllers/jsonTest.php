@@ -13,7 +13,7 @@ class jsonTest extends CI_Controller
 	function jsonForm()
 	{
 		$this->load->helper('form');
-		$this->load->view('jsonTest/jsonForm');
+		$this->load->view('jsonTest/json_form');
 	}
 	
 	function runJsonTest()

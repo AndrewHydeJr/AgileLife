@@ -1,5 +1,5 @@
-<?
-class UserVo extends baseVo
+<?php
+class user_vo extends base_vo
 {
 	public $name;
 	public $boards;

@@ -1,5 +1,5 @@
-<?
-class TaskVo extends BaseVo
+<?php
+class task_vo extends base_vo
 {
 	public $name;
 	public $status;

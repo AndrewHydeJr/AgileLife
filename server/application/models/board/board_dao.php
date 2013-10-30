@@ -1,11 +1,11 @@
-<?
-class BoardDao extends BaseDao
+<?php
+class board_dao extends base_dao
 {
 	public function __construct() 
 	{		
 		parent::__construct();
-		$this->tableName = "Board";		
-		$this->boardUserTable = "UserBoard";
+		$this->tableName = "board";		
+		$this->boardUserTable = "user_board";
     }
 
 	public function save($board)
@@ -25,9 +25,10 @@ class BoardDao extends BaseDao
 	{		
 		$board->dateCreated = time();
 
-		$result = new Result();
+		$result = new result();
 		
 		$this->db->trans_start();
+
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($board));
 		$board->id = $this->db->insert_id();
 		$this->db->trans_complete();
@@ -40,10 +41,12 @@ class BoardDao extends BaseDao
 	public function update($board)
 	{		
 		$this->db->where('id', $board->id);
-		$result = new Result();
-		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($board));
+		$result = new result();  
+		$data = $this->getDataFromObject($board);
+		$this->db->trans_start();
+		$result->status = $this->db->update($this->tableName, $data );
+		$this->db->trans_complete();
 		$result->data = $board;
-		
 		return $result;
 	}
 	
@@ -51,13 +54,14 @@ class BoardDao extends BaseDao
 	{
 		$data = $this->getBaseDataFromObject($object);
 		if($object->name)
-			$data['name'] = $object->name;            
+			$data['name'] = $object->name; 
+		
 		return $data;
 	}
 	
 	public function fetch()
 	{
-		$result = new Result();
+		$result = new result();
 		
 		$query = $this->db->get($this->tableName);
 		if ($query->num_rows() > 0)
@@ -76,7 +80,7 @@ class BoardDao extends BaseDao
 	
 	public function delete($id)
 	{
-		$board = new BoardVo();
+		$board = new board_vo();
 		$board->id = $id;
 		$board->deleted = 1;
 		$board->dateUpdated = time();
@@ -91,7 +95,7 @@ class BoardDao extends BaseDao
 	}
 	
 	// BOARD USER
-	public function saveBoardUser($boardUser)
+	public function saveBoardForUser($boardUser)
 	{
 		if($boardUser->id)
 			$result = $this->updateBoardUser($boardUser);
@@ -102,7 +106,7 @@ class BoardDao extends BaseDao
 	
 	public function updateBoardUser($boardUser)
 	{
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->update($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
 		
 		$result->data = $boardUser;
@@ -112,7 +116,7 @@ class BoardDao extends BaseDao
 	{
 		$boardUser->dateCreated = time();
 
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->insert($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
 		
 		$query = $this->db->get_where($this->boardUserTable, array('id' => $boardUser->id), 1, 0);
@@ -133,7 +137,8 @@ class BoardDao extends BaseDao
 		if($object->userId)
 			$data['userId'] = $object->userId;
 		if($object->boardId)
-			$data['boardId'] = $object->boardId;
+			$data['boardId'] = $object->boardId;			
+		
 		return $data;
 	}
 	

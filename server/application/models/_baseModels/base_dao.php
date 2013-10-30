@@ -1,5 +1,5 @@
 <?
-class UserDao extends BaseDao
+class base_dao extends base_dao
 {
 	public function __construct() 
 	{		
@@ -24,7 +24,7 @@ class UserDao extends BaseDao
 	{		
 		$user->dateCreated = time();
 
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
 	
@@ -56,6 +56,7 @@ class UserDao extends BaseDao
         	$data['dateCreated'] = $object->dateCreated;
         if($object->deleted)
         	$data['deleted'] = $object->deleted;
+            
             
 		return $data;
 	}

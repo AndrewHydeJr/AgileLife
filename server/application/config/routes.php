@@ -53,7 +53,7 @@ $route["delete/user/(:any)"] = "user/delete/$1";
 $route["delete/userDeleteTest"] = "user/deleteTest";
 
 //board
-$route["save/board"] = 'user/board';
+$route["save/board"] = 'board/saveForUser';
 $route["save/board/createTest"] = 'board/saveTest/1';
 $route["save/board/updateTest"] = 'board/saveTest/0';
 $route["fetch/boards"] = "board/fetch";
@@ -90,6 +90,7 @@ $route["save/taskToBoardTest"] = "board/saveTaskForBoardTest";
 //test pages
 $route["save/user/form"] = "user/form";
 
+$route["jsonForm"] = "jsonTest/jsonForm";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

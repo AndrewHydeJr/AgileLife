@@ -1,0 +1,46 @@
+[Wed Sep 11 23:06:59.047606 2013] [ssl:warn] [pid 1171] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Wed Sep 11 23:06:59.203693 2013] [ssl:warn] [pid 1172] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Wed Sep 11 23:06:59.633543 2013] [mpm_prefork:notice] [pid 1172] AH00163: Apache/2.4.4 (Unix) OpenSSL/1.0.1e PHP/5.4.17 configured -- resuming normal operations
+[Wed Sep 11 23:06:59.633635 2013] [core:notice] [pid 1172] AH00094: Command line: '/opt/bitnami/apache2/bin/httpd -f /opt/bitnami/apache2/conf/httpd.conf'
+[Wed Sep 11 23:13:54.246388 2013] [mpm_prefork:error] [pid 1172] AH00161: server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting
+[Thu Sep 12 00:54:39.359001 2013] [autoindex:error] [pid 1194] [client 72.221.127.196:35628] AH01276: Cannot serve directory /opt/bitnami/apache2/htdocs/: No matching DirectoryIndex (index.html,index.php) found, and server-generated directory index forbidden by Options directive
+[Thu Sep 12 00:58:34.748258 2013] [:error] [pid 1191] [client 72.221.127.196:48045] script '/opt/bitnami/apache2/htdocs/index.php' not found or unable to stat
+[Thu Sep 12 01:12:12.071324 2013] [:error] [pid 1194] [client 72.221.127.196:39457] script '/opt/bitnami/apache2/htdocs/phpMyAdmin.php' not found or unable to stat
+[Thu Sep 12 01:45:21.625114 2013] [autoindex:error] [pid 1188] [client 127.0.0.1:60710] AH01276: Cannot serve directory /opt/bitnami/apache2/htdocs/: No matching DirectoryIndex (index.html,index.php) found, and server-generated directory index forbidden by Options directive
+[Thu Sep 12 02:16:07.331848 2013] [:error] [pid 1194] [client 72.221.127.196:40042] script '/opt/bitnami/apache2/htdocs/index.php' not found or unable to stat
+[Fri Sep 13 01:06:16.226140 2013] [:error] [pid 1194] [client 72.221.127.196:46943] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:06:17.813570 2013] [:error] [pid 1193] [client 72.221.127.196:34399] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:06:52.759154 2013] [:error] [pid 1188] [client 72.221.127.196:38325] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:06:53.640292 2013] [:error] [pid 1191] [client 72.221.127.196:43557] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:06:54.428337 2013] [:error] [pid 1189] [client 72.221.127.196:45941] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:07:27.296116 2013] [:error] [pid 1194] [client 72.221.127.196:43261] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:07:28.162205 2013] [:error] [pid 1193] [client 72.221.127.196:37955] PHP Fatal error:  Cannot use object of type CI_Config as array in /opt/bitnami/apache2/htdocs/agileLife/application/controllers/user.php on line 9
+[Fri Sep 13 01:25:55.608375 2013] [:error] [pid 1191] [client 72.221.127.196:42886] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Sep 13 01:31:31.267674 2013] [:error] [pid 1189] [client 72.221.127.196:44079] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Sep 13 01:31:32.628111 2013] [:error] [pid 1194] [client 72.221.127.196:41478] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Sep 13 01:32:06.423765 2013] [:error] [pid 1193] [client 72.221.127.196:39178] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Sep 13 01:34:06.940120 2013] [mpm_prefork:notice] [pid 1172] AH00169: caught SIGTERM, shutting down
+[Sat Sep 14 00:47:01.558721 2013] [ssl:warn] [pid 1076] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Sat Sep 14 00:47:01.739033 2013] [ssl:warn] [pid 1077] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Sat Sep 14 00:47:02.078459 2013] [mpm_prefork:notice] [pid 1077] AH00163: Apache/2.4.4 (Unix) OpenSSL/1.0.1e PHP/5.4.17 configured -- resuming normal operations
+[Sat Sep 14 00:47:02.078582 2013] [core:notice] [pid 1077] AH00094: Command line: '/opt/bitnami/apache2/bin/httpd -f /opt/bitnami/apache2/conf/httpd.conf'
+[Sat Sep 14 01:08:49.083584 2013] [mpm_prefork:notice] [pid 1077] AH00169: caught SIGTERM, shutting down
+[Mon Sep 30 23:18:10.852175 2013] [ssl:warn] [pid 1095] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Mon Sep 30 23:18:11.010991 2013] [ssl:warn] [pid 1096] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Mon Sep 30 23:18:11.397993 2013] [mpm_prefork:notice] [pid 1096] AH00163: Apache/2.4.4 (Unix) OpenSSL/1.0.1e PHP/5.4.17 configured -- resuming normal operations
+[Mon Sep 30 23:18:11.398099 2013] [core:notice] [pid 1096] AH00094: Command line: '/opt/bitnami/apache2/bin/httpd -f /opt/bitnami/apache2/conf/httpd.conf'
+[Tue Oct 01 02:14:52.284846 2013] [mpm_prefork:notice] [pid 1096] AH00169: caught SIGTERM, shutting down
+[Fri Oct 11 00:12:23.865175 2013] [ssl:warn] [pid 1106] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Fri Oct 11 00:12:24.041744 2013] [ssl:warn] [pid 1107] AH01909: RSA certificate configured for localhost:443 does NOT include an ID which matches the server name
+[Fri Oct 11 00:12:24.295757 2013] [mpm_prefork:notice] [pid 1107] AH00163: Apache/2.4.4 (Unix) OpenSSL/1.0.1e PHP/5.4.17 configured -- resuming normal operations
+[Fri Oct 11 00:12:24.295922 2013] [core:notice] [pid 1107] AH00094: Command line: '/opt/bitnami/apache2/bin/httpd -f /opt/bitnami/apache2/conf/httpd.conf'
+[Fri Oct 11 00:43:30.927759 2013] [autoindex:error] [pid 1118] [client 72.221.127.196:41420] AH01276: Cannot serve directory /opt/bitnami/apache2/htdocs/: No matching DirectoryIndex (index.html,index.php) found, and server-generated directory index forbidden by Options directive
+[Fri Oct 11 00:43:31.006066 2013] [mpm_prefork:error] [pid 1107] AH00161: server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting
+[Fri Oct 11 01:18:22.144971 2013] [:error] [pid 1118] [client 72.221.127.196:39277] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Oct 11 01:19:21.515616 2013] [:error] [pid 1117] [client 72.221.127.196:39907] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303, referer: http://ec2-54-242-93-135.compute-1.amazonaws.com/agileLife/jsonTest/jsonForm
+[Fri Oct 11 01:21:19.271472 2013] [:error] [pid 1119] [client 72.221.127.196:33227] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303, referer: http://ec2-54-242-93-135.compute-1.amazonaws.com/agileLife/jsonTest/jsonForm
+[Fri Oct 11 01:24:24.903840 2013] [:error] [pid 1120] [client 72.221.127.196:37377] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303, referer: http://ec2-54-242-93-135.compute-1.amazonaws.com/agileLife/jsonTest/jsonForm
+[Fri Oct 11 01:24:54.352380 2013] [:error] [pid 1121] [client 72.221.127.196:34649] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Oct 11 01:26:43.514505 2013] [:error] [pid 1121] [client 72.221.127.196:48706] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Oct 11 01:26:57.768356 2013] [:error] [pid 1118] [client 72.221.127.196:48109] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303
+[Fri Oct 11 01:27:09.074967 2013] [:error] [pid 1119] [client 72.221.127.196:41405] PHP Fatal error:  Class 'Basevo' not found in /opt/bitnami/apache2/htdocs/agileLife/system/core/Loader.php on line 303

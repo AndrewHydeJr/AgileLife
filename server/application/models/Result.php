@@ -1,5 +1,5 @@
-<?
-class Result
+<?php
+class result
 {
 	public $status;
 	public $data;

@@ -1,5 +1,5 @@
-<?
-class BoardVo extends BaseVo
+<?php
+class board_vo extends base_vo
 {
 	public $name;
 	public $tasks;

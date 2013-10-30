@@ -5,16 +5,16 @@ class user extends CI_Controller {
 	function user()
 	{
 		parent::__construct();
-		$this->load->model("baseVo");
-		$this->load->model("baseDao");
-		$this->load->model("user/userVo");		
-		$this->load->model("user/userDao");
-		$this->load->model("board/boardVo");
-		$this->load->model("board/boardDao");
-		$this->load->model('board/boardUserVo');
-		$this->load->model("task/taskVo");
-		$this->load->model("task/taskDao");
-		$this->load->model("task/taskBoardVo");
+		$this->load->model("base_vo");
+		$this->load->model("base_dao");
+		$this->load->model("user/user_vo");		
+		$this->load->model("user/user_dao");
+		$this->load->model("board/board_vo");
+		$this->load->model("board/board_dao");
+		$this->load->model('board/board_user_vo');
+		$this->load->model("task/task_vo");
+		$this->load->model("task/task_dao");
+		$this->load->model("task/task_board_vo");
 		$this->load->model("utils");
 		$this->load->model("result");
 		$this->load->helper('form');
@@ -31,20 +31,20 @@ class user extends CI_Controller {
 		if(!$user)
 		{
 			$jsonData = $this->input->get_post("jsonData");
-			
+
 			$data = json_decode($jsonData);
-			
-			$user = new UserVo();
+						
+			$user = new user_vo();
 			if(isset($data->id))
 				$user->id = $data->id;
 			if($data->name)
 				$user->name = $data->name;
-						
+			
 			if(isset($data->boards) && count($data->boards))
 			{
 				foreach($data->boards as $boardJson)
 				{
-					$board = new BoardVo();
+					$board = new board_vo();
 					
 					if(isset($boardJson->id))					
 						$board->id = $boardJson->id;
@@ -58,7 +58,7 @@ class user extends CI_Controller {
 					{
 						foreach($boardJson->tasks as $taskJson)
 						{
-							$task = new TaskVo();
+							$task = new task_vo();
 							if(isset($taskJson->id))
 								$task->id = $taskJson->id;
 							
@@ -77,46 +77,45 @@ class user extends CI_Controller {
 				}
 			}
 		}
-		
-		$userDao = new UserDao();
-		
+
+		$userDao = new user_dao();
+
 		$saveResult = $userDao->save($user);
 		$user->id = $saveResult->data->id;
 		if(count($user->boards))
 		{
 			foreach($user->boards as $board)
 			{
-				$boardDao = new BoardDao();
+				$boardDao = new board_dao();
 				$this->saveBoardForUser($user->id, $board);
 				if($board->tasks){
 					foreach($board->tasks as $task)
 					{
-						$taskDao = new TaskDao();
+						$taskDao = new task_dao();
 						$this->saveTaskForBoard($task, $board->id);
 					}	
 				}				
 			}
 		}
 
-		redirect('/fetch/user/'.$user->id, 'refresh');
+		redirect('fetch/user/'.$user->id, 'refresh');
 		
 		return;			
 	}	
 	
 	public function fetch()
 	{
-		$userDao = new UserDao();
+		$userDao = new user_dao();
 		return $userDao->fetch();
 	}
 	
 	public function fetchById($userId)
 	{
 		$head['title'] = "user detail";
-		
-		$userDao = new UserDao();	
+		$userDao = new user_dao();	
 		$data["user"] = $userDao->fetchById($userId);
 		
-		$this->load->view('user/userDetail', $data);
+		$this->load->view('user/user_detail', $data);
 	}
 		
 	public function delete($id)
@@ -130,12 +129,12 @@ class user extends CI_Controller {
 	{
 		if($board)
 		{
-			$userDao = new UserDao();
-			$boardDao = new BoardDao();
+			$userDao = new user_dao();
+			$boardDao = new board_dao();
 			$result = $boardDao->save($board);
 			$board->id = $result->data->id;
 			
-			$boardUser = new BoardUserVo();
+			$boardUser = new board_user_vo();
 			$boardUser->id = $board->boardUserId;
 			$boardUser->userId = $userId;
 			$boardUser->boardId = $board->id;
@@ -146,15 +145,16 @@ class user extends CI_Controller {
 		}		
 	}
 	
+	
 
 	//BOARD TASK
 	public function saveTaskForBoard($task, $boardId)
 	{
-		$taskDao = new TaskDao();
+		$taskDao = new task_dao();
 		$result = $taskDao->save($task);
 		$task->id = $result->data->id;
 			
-		$taskBoard = new TaskBoardVo();
+		$taskBoard = new task_board_vo();
 		$taskBoard->id = $task->taskBoardId;
 		$taskBoard->boardId = $boardId;
 		$taskBoard->taskId = $task->id;

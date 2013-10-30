@@ -1,11 +1,11 @@
-<?
-class TaskDao extends BaseDao
+<?php
+class task_dao extends base_dao
 {
 	public function __construct() 
 	{		
 		parent::__construct();
-		$this->tableName = "Task";
-		$this->taskBoardTable = "BoardTask";
+		$this->tableName = "task";
+		$this->taskBoardTable = "board_task";
     }
 
 	public function save($task)
@@ -25,7 +25,7 @@ class TaskDao extends BaseDao
 	{		
 		$task->dateCreated = time();
 		
-		$result = new Result();
+		$result = new result();
 		
 		$this->db->trans_start();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($task));		
@@ -40,7 +40,7 @@ class TaskDao extends BaseDao
 	public function update($task)
 	{		
 		$this->db->where('id', $task->id);
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($task));
 		$result->data = $task;
 		
@@ -57,7 +57,7 @@ class TaskDao extends BaseDao
 	
 	public function fetch()
 	{
-		$result = new Result();
+		$result = new result();
 		
 		$query = $this->db->get($this->tableName);
 		if ($query->num_rows() > 0)
@@ -76,7 +76,7 @@ class TaskDao extends BaseDao
 	
 	public function delete($id)
 	{
-		$task = new TaskVo();
+		$task = new task_vo();
 		$task->id = $id;
 		$task->deleted = 1;
 		$task->dateUpdated = time();
@@ -101,7 +101,7 @@ class TaskDao extends BaseDao
 	
 	public function updateTaskBoard($taskBoard)
 	{
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->update($this->taskBoardTable, $this->getDataFromTaskBoard($taskBoard));
 		$result->data = $taskBoard;
 	}
@@ -109,7 +109,7 @@ class TaskDao extends BaseDao
 	public function insertTaskBoard($taskBoard)
 	{
 		$taskBoard->dateCreated = time();
-		$result = new Result();
+		$result = new result();
 		
 		$this->db->trans_start();
 		$result->status = $this->db->insert($this->taskBoardTable, $this->getDataFromTaskBoard($taskBoard));		

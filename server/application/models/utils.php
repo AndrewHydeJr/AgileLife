@@ -1,5 +1,5 @@
-<?
-class Utils
+<?php
+class utils
 {
 	public static function getGUID(){
 	    if (function_exists('com_create_guid')){

@@ -3,13 +3,19 @@
 class board extends CI_Controller {
 
 	function board(){
-		parent::__construct();
-		$this->load->model("baseVo");
-		$this->load->model("baseDao");
-		$this->load->model("board/boardVo");		
-		$this->load->model("board/boardDao");
-		$this->load->model("task/taskVo");		
-		$this->load->model("task/taskDao");
+		parent::__construct();		
+		$this->load->model("base_vo");
+		$this->load->model("base_dao");
+		$this->load->model("base_delegate");
+		$this->load->model("error/generic_error_vo");
+		$this->load->model("user/user_vo");
+		$this->load->model("user/user_dao");
+		$this->load->model("board/board_vo");
+		$this->load->model('board/board_user_vo');
+		$this->load->model("board/board_dao");
+		$this->load->model("board/board_delegate");
+		$this->load->model("task/task_vo");		
+		$this->load->model("task/task_dao");
 		$this->load->model("utils");
 		$this->load->model("result");
 	}
@@ -20,7 +26,6 @@ class board extends CI_Controller {
 		
 		
 	}
-	
 	
 	public function save($board=null)
 	{		
@@ -35,81 +40,71 @@ class board extends CI_Controller {
 		}
 		
 	}
-
-	public function saveTest($create=1)
-	{
-		$board = 0;
-		if($create)
-		{
-			$board = new BoardVo();		
-			$board->name = "this is a board";			
-		}
-		else
-		{
-			$board = new BoardVo();		
-			$board->guid = "{AE7D169A-70C1-D224-024F-23B7BBE168C1}";
-			$board->name = "this is an updated board!!";
-		}
-		
-		$result = $this->save($board);
-		return $result;
-	}	
 	
+	public function saveForUser()
+	{
+		$boardDelegate = new board_delegate();
+		$jsonData = $this->input->get_post("jsonData");
+		$data = json_decode($jsonData);
+
+		if($data == "")
+		{
+			$viewData["error"] = new generic_error_vo();
+			$viewData["error"]->setMessage("invalidJson");
+			$this->load->view('error/error', $viewData);	
+			return;
+		}
+				
+		$board = new board_vo();		
+		$userId = 0;
+		
+		if(isset($data->userId))
+			$userId = $data->userId;
+		
+		if(isset($data->boardUserId))
+			$board->boardUserId = $data->boardUserId;
+		
+		if(isset($data->id))
+			$board->id = $data->id;
+		
+		if(isset($data->name))
+			$board->name = $data->name;
+			
+
+		$board = $boardDelegate->saveBoardForUser($userId, $board);
+		
+		$viewData["board"] = $board;
+		
+		$this->load->view('board/board_detail', $viewData);
+		
+	}
+		
 	public function fetch()
 	{
 		$boardDao = new BoardDao();
 		return $boardDao->fetch();		
 	}
 	
-	public function fetchTest()
+	public function delete($id)
 	{
-		$result = $this->fetch();
-
-		if ($result->data->num_rows() > 0)
-		{
-		   foreach ($result->data->result() as $row)
-		   {
-		      echo $row->name;
-		      echo $row->dateUpdated;
-		      echo $row->guid;
-		      echo "<br><br>";
-		   }
-		}
-	}
-	
-	public function delete($guid)
-	{
-		$boardDao = new BoardDao();
-		return $boardDao->delete($guid);
-	}
-	
-	public function deleteTest()
-	{
-		return $this->delete("{AE7D169A-70C1-D224-024F-23B7BBE168C1}");
+		$boardDao = new board_dao();
+		return $boardDao->delete($id);
 	}
 	
 	public function saveTaskForBoard($task, $boardId)
 	{
 		if($boardId)
 		{
-			$taskDao = new TaskDao();			
+			$taskDao = new task_dao();			
 			$result = $taskDao->save($task);
 			$task->id = $result->data->id;
 			
-			$boardDao = new BoardDao();
+			$boardDao = new board_dao();
 			$result = $taskDao->saveTaskBoard($task, $boardId);
 			
 			return $result;
 		}
 
 	}	
-	
-	public function saveTaskForBoardTest()
-	{
-		$boardId = 21;
-		$task = new TaskVo();
-		$task->name = "do something awesome.";
-		$result = $this->saveTaskForBoard($task, $boardId);
-	}
-		
+			
 }

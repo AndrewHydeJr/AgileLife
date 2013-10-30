@@ -1,4 +1,4 @@
-<?
+<?php
 	/*echo form_open('save/user');
 	echo form_input('path', 'foo');
 	echo form_submit('mysubmit', 'Submit Post!');

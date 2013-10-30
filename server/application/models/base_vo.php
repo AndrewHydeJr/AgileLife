@@ -1,5 +1,5 @@
-<?
-class BaseVo
+<?php
+class base_vo
 {
 	public $id;
 	public $createdBy;

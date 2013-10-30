@@ -1,5 +1,5 @@
-<?
-class UserDelegate
+<?php
+class user_delegate
 {
 	function save()
 	{

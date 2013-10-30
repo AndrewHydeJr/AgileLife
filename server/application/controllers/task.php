@@ -4,7 +4,7 @@ class task extends CI_Controller {
 
 	function task(){
 		parent::__construct();
-		$this->load->model("BaseVo");
+		$this->load->model("baseVo");
 		$this->load->model("BaseDao");
 		$this->load->model("task/TaskVo");		
 		$this->load->model("task/TaskDao");
@@ -41,7 +41,7 @@ class task extends CI_Controller {
 	public function delete($id)
 	{
 		$taskDao = new TaskDao();
-		return $taskDao->delete($guid);
+		return $taskDao->delete($id);
 	}
 	
 	
