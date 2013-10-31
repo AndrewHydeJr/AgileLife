@@ -109,7 +109,7 @@ class task_dao extends base_dao
 	{
 		$taskBoard->dateCreated = time();
 		$result = new result();
-		
+
 		$this->db->trans_start();
 
 		$result->status = $this->db->insert($this->taskBoardTable, $this->getDataFromTaskBoard($taskBoard));		
@@ -133,7 +133,6 @@ class task_dao extends base_dao
 		if($object->sortOrder)
 			$data['sortOrder'] = $object->sortOrder;
 		
-		echo "here: ".$object->boardUserId;exit;
 		return $data;
 	}
 
