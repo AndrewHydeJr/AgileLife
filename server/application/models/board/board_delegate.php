@@ -15,18 +15,21 @@ class board_delegate extends base_delegate
 
 			$userDao = new user_dao();
 			$boardDao = new board_dao();
+			
 			$result = $boardDao->save($board);
 		
 			$board->id = $result->data->id;
-			
+
 			$boardUser = new board_user_vo();
 			$boardUser->id = $board->boardUserId;
 			$boardUser->userId = $userId;
 			$boardUser->boardId = $board->id;
 			
-			$result = $boardDao->saveBoardForUser($boardUser);
+			$result = $boardDao->saveBoardForUser($boardUser);			
 			
-			return $result;
+			$board->boardUserId = $result->data->id;
+			
+			return $board;
 		}
 		else
 		{

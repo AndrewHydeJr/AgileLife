@@ -43,14 +43,11 @@ $route['404_override'] = '';
 
 //user
 $route["save/user"] = 'user/save';
-$route["save/user/createTest"] = 'user/saveTest/1';
-$route["save/user/updateTest"] = 'user/saveTest/0';
 $route["fetch/users"] = "user/fetch";
-$route["fetch/usersTest"] = "user/fetchTest";
+$route["fetch/user/boards/(:any)"] = "user/fetchBoardsForUserId/$1";
 $route["fetch/user/(:any)"] = "user/fetchById/$1";
-
 $route["delete/user/(:any)"] = "user/delete/$1";
-$route["delete/userDeleteTest"] = "user/deleteTest";
+
 
 //board
 $route["save/board"] = 'board/saveForUser';
@@ -62,7 +59,7 @@ $route["delete/board/(:any)"] = "board/delete/$1";
 $route["delete/boardDeleteTest"] = "board/deleteTest";
 
 //task
-$route["save/task"] = 'user/task';
+$route["save/task"] = 'task/saveToBoard';
 $route["save/task/createTest"] = 'task/saveTest/1';
 $route["save/task/updateTest"] = 'task/saveTest/0';
 $route["fetch/tasks"] = "task/fetch";

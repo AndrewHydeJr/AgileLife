@@ -1,6 +1,6 @@
 
 url:  /user/save
-url:  index.php/user/save
+url:  /index.php/user/save
 
 {
     "name": "chris 1",

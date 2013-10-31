@@ -16,26 +16,6 @@ class jsonTest extends CI_Controller
 		$this->load->view('jsonTest/json_form');
 	}
 	
-	function runJsonTest()
-	{
-		$path = $this->input->post("path");
-		$jsonData = $this->input->post("jsonData");
-		
-		switch($path)
-		{
-			case "/save/user":
-				//echo "saving the user <br> <br>";
-				$this->session->set_flashdata('jsonData', $jsonData);
-				redirect("/save/user/testJson/save", 'location');		
-			break;
-		}
-		
-		//
-		
-		//echo $jsonData;exit;
-		//redirect("/".$path, 'location');
-
-	}
 	
 }
 ?>

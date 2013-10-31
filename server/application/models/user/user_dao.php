@@ -58,7 +58,7 @@ class user_dao extends base_dao
 		return $data;
 	}
 	
-	public function fetch()
+	public function getAll()
 	{
 		$result = new result();
 		
@@ -90,14 +90,14 @@ class user_dao extends base_dao
 			{				
 				$user = $userDao->setBaseProperties($user, $row);
 				$user->name = $row->name;
-				$user->boards = $this->fetchBoardsByUserId($user->id);
+				$user->boards = $this->getBoardsForUserId($user->id);
 				break;
 			}
 		}
 		return $user;
 	}
 	
-	public function fetchBoardsByUserId($userId)
+	public function getBoardsForUserId($userId)
 	{
 		$boards = array();
 		$boardQuery = $this->db->query(
@@ -108,13 +108,14 @@ class user_dao extends base_dao
 										
 		if ($boardQuery->num_rows() > 0)
 		{
+			$boardDao = new board_dao();
 			foreach ($boardQuery->result() as $boardRow)
 			{
 				$board = new board_vo();
 				$board = $this->setBaseProperties($board, $boardRow);
 				$board->name = $boardRow->name;				
-				$board->tasks = $this->fetchTasksByBoardId($board->id);
 				$board->boardUserId = $boardRow->boardUserId;
+				$board->tasks = $boardDao->getTasksForBoardUserId($board->boardUserId);				
 				array_push($boards, $board);			
 			}
 		}
@@ -122,31 +123,7 @@ class user_dao extends base_dao
 		return $boards;
 	}
 	
-	public function fetchTasksByBoardId($boardId)
-	{
-		$tasks = array();
-		$tasksQuery = $this->db->query(
-										"SELECT t.id, bt.id as taskBoardId, t.name, t.createdBy, t.dateCreated, t.updatedBy, t.dateUpdated, ".
-										"t.deleted, bt.status, bt.sortOrder ".
-										"FROM Task t INNER JOIN board_task bt on t.id = bt.taskId ".
-										"AND bt.boardId = ".$boardId
-										);
-		
-		if($tasksQuery->num_rows() > 0)
-		{			
-			foreach($tasksQuery->result() as $taskRow)
-			{
-				$task = new task_vo();
-				$task = $this->setBaseProperties($task, $taskRow);
-				$task->name = $taskRow->name;
-				$task->status = $taskRow->status;
-				$task->sortOrder = $taskRow->sortOrder;
-				$task->taskBoardId = $taskRow->taskBoardId;
-				array_push($tasks, $task);
-			}
-		}
-		return $tasks;
-	}
+	
 	
 	public function delete($id)
 	{
@@ -156,7 +133,7 @@ class user_dao extends base_dao
 		$user->dateUpdated = time();
 		
 		$this->db->where('id', $user->id);
-		$result = new Result();
+		$result = new result();
 		$result->status = $this->db->update($this->tableName, $this->getDataFromObject($user));
 		$result->data = $user;
 

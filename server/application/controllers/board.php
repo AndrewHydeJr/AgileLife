@@ -70,13 +70,11 @@ class board extends CI_Controller {
 		if(isset($data->name))
 			$board->name = $data->name;
 			
+		$result = $boardDelegate->saveBoardForUser($userId, $board);
 
-		$board = $boardDelegate->saveBoardForUser($userId, $board);
+		$viewData["json"] = $result;
 		
-		$viewData["board"] = $board;
-		
-		$this->load->view('board/board_detail', $viewData);
-		
+		$this->load->view('json_display', $viewData);		
 	}
 		
 	public function fetch()

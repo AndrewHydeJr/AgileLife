@@ -1,0 +1,9 @@
+url:  index.php/save/task
+
+{
+    "boardId":48,
+    "name": "first task",
+    "status":2,
+    "sortOrder":3
+}
+

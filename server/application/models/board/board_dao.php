@@ -115,16 +115,12 @@ class board_dao extends base_dao
 	public function insertBoardUser($boardUser)
 	{
 		$boardUser->dateCreated = time();
-
-		$result = new result();
-		$result->status = $this->db->insert($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
 		
-		$query = $this->db->get_where($this->boardUserTable, array('id' => $boardUser->id), 1, 0);
-		if($query->num_rows())
-		{
-			$row = $query->row();
-			$boardUser->id = $row->id;
-		}
+		$result = new result();
+		$this->db->trans_start();
+		$result->status = $this->db->insert($this->boardUserTable, $this->getDataFromBoardUser($boardUser));		
+		$boardUser->id = $this->db->insert_id();
+		$this->db->trans_complete();
 		
 		$result->data = $boardUser;
 		
@@ -140,6 +136,34 @@ class board_dao extends base_dao
 			$data['boardId'] = $object->boardId;			
 		
 		return $data;
+	}
+	
+	public function getTasksForBoardUserId($boardUserId)
+	{
+		$tasks = array();
+
+		$tasksQuery = $this->db->query(
+										"SELECT t.id, bt.id as taskBoardId, t.name, t.createdBy, ".
+										"t.dateCreated, t.updatedBy, t.dateUpdated, ".
+										"t.deleted, bt.status, bt.sortOrder ".
+										"FROM Task t INNER JOIN board_task bt on t.id = bt.taskId ".
+										"AND bt.boardUserId = ".$boardUserId
+										);
+		
+		if($tasksQuery->num_rows() > 0)
+		{			
+			foreach($tasksQuery->result() as $taskRow)
+			{
+				$task = new task_vo();
+				$task = $this->setBaseProperties($task, $taskRow);
+				$task->name = $taskRow->name;
+				$task->status = $taskRow->status;
+				$task->sortOrder = $taskRow->sortOrder;
+				$task->taskBoardId = $taskRow->taskBoardId;
+				array_push($tasks, $task);
+			}
+		}
+		return $tasks;
 	}
 	
 		

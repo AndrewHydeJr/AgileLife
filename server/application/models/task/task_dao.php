@@ -26,7 +26,6 @@ class task_dao extends base_dao
 		$task->dateCreated = time();
 		
 		$result = new result();
-		
 		$this->db->trans_start();
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($task));		
 		$task->id = $this->db->insert_id();
@@ -112,6 +111,7 @@ class task_dao extends base_dao
 		$result = new result();
 		
 		$this->db->trans_start();
+
 		$result->status = $this->db->insert($this->taskBoardTable, $this->getDataFromTaskBoard($taskBoard));		
 		$taskBoard->id = $this->db->insert_id();
 		$this->db->trans_complete();	
@@ -124,8 +124,8 @@ class task_dao extends base_dao
 	public function getDataFromTaskBoard($object)
 	{
 		$data = $this->getBaseDataFromObject($object);
-		if($object->boardId)
-			$data['boardId'] = $object->boardId;
+		if($object->boardUserId)
+			$data['boardUserId'] = $object->boardUserId;
 		if($object->taskId)
 			$data['taskId'] = $object->taskId;
 		if($object->status)
@@ -133,6 +133,7 @@ class task_dao extends base_dao
 		if($object->sortOrder)
 			$data['sortOrder'] = $object->sortOrder;
 		
+		echo "here: ".$object->boardUserId;exit;
 		return $data;
 	}
 
