@@ -41,52 +41,24 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
-//user
-$route["save/user"] = 'user/save';
+//fetch
 $route["fetch/users"] = "user/fetch";
-$route["fetch/user/boards/(:any)"] = "user/fetchBoardsForUserId/$1";
+$route["fetch/user/boards/(:any)"] = "board/fetchBoardsForUserId/$1";
 $route["fetch/user/(:any)"] = "user/fetchById/$1";
-$route["delete/user/(:any)"] = "user/delete/$1";
-
-
-//board
-$route["save/board"] = 'board/saveForUser';
-$route["save/board/createTest"] = 'board/saveTest/1';
-$route["save/board/updateTest"] = 'board/saveTest/0';
-$route["fetch/boards"] = "board/fetch";
-$route["fetch/boardTest"] = "board/fetchTest";
-$route["delete/board/(:any)"] = "board/delete/$1";
-$route["delete/boardDeleteTest"] = "board/deleteTest";
-
-//task
-$route["save/task"] = 'task/saveToBoard';
-$route["save/task/createTest"] = 'task/saveTest/1';
-$route["save/task/updateTest"] = 'task/saveTest/0';
 $route["fetch/tasks"] = "task/fetch";
-$route["fetch/taskTest"] = "task/fetchTest";
+$route["fetch/board/tasks/(:any)"] = "task/fetchTasksForuserBoardId/$1";
+
+//save
+$route["save/user"] = 'user/save';
+$route["save/board"] = 'board/save';
+$route["save/task"] = 'task/save';
+
+//delete
+$route["delete/user/(:any)"] = "user/delete/$1";
+$route["delete/board/(:any)"] = "board/delete/$1";
 $route["delete/task/(:any)"] = "task/delete/$1";
-$route["delete/taskDeleteTest"] = "task/deleteTest";
 
-//lane
-$route["save/lane"] = 'user/lane';
-$route["save/lane/createTest"] = 'lane/saveTest/1';
-$route["save/lane/updateTest"] = 'lane/saveTest/0';
-$route["fetch/lanes"] = "lane/fetch";
-$route["fetch/laneTest"] = "lane/fetchTest";
-$route["delete/lane/(:any)"] = "lane/delete/$1";
-$route["delete/laneDeleteTest"] = "lane/deleteTest";
-
-//boards to users
-$route["save/boardToUser"] = "user/saveBoardForUser";
-$route["save/boardToUserTest"] = "user/saveBoardForUserTest";
-
-//tasks to boards
-$route["save/taskToBoard"] = "board/saveTaskForBoard";
-$route["save/taskToBoardTest"] = "board/saveTaskForBoardTest";
-
-//test pages
-$route["save/user/form"] = "user/form";
-
+//api test
 $route["jsonForm"] = "jsonTest/jsonForm";
 
 /* End of file routes.php */

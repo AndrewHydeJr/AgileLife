@@ -5,7 +5,7 @@ class board_dao extends base_dao
 	{		
 		parent::__construct();
 		$this->tableName = "board";		
-		$this->boardUserTable = "user_board";
+		$this->userBoardTable = "user_board";
     }
 
 	public function save($board)
@@ -94,31 +94,30 @@ class board_dao extends base_dao
 		
 	}
 	
-	// BOARD USER
-	public function saveBoardForUser($boardUser)
+	//USER BOARD
+	public function saveUserBoard($boardUser)
 	{
 		if($boardUser->id)
-			$result = $this->updateBoardUser($boardUser);
+			$result = $this->updateUserBoard($boardUser);
 		else
-			$result = $this->insertBoardUser($boardUser);
+			$result = $this->insertUserBoard($boardUser);
 		return $result;
 	}
 	
-	public function updateBoardUser($boardUser)
+	public function updateUserBoard($boardUser)
 	{
 		$result = new result();
-		$result->status = $this->db->update($this->boardUserTable, $this->getDataFromBoardUser($boardUser));
+		$result->status = $this->db->update($this->userBoardTable, $this->getDataFromUserBoard($boardUser));
 		
 		$result->data = $boardUser;
 	}
 	
-	public function insertBoardUser($boardUser)
+	public function insertUserBoard($boardUser)
 	{
 		$boardUser->dateCreated = time();
-		
 		$result = new result();
 		$this->db->trans_start();
-		$result->status = $this->db->insert($this->boardUserTable, $this->getDataFromBoardUser($boardUser));		
+		$result->status = $this->db->insert($this->userBoardTable, $this->getDataFromUserBoard($boardUser));		
 		$boardUser->id = $this->db->insert_id();
 		$this->db->trans_complete();
 		
@@ -127,7 +126,7 @@ class board_dao extends base_dao
 		return $result;
 	}
 	
-	public function getDataFromBoardUser($object)
+	public function getDataFromUserBoard($object)
 	{
 		$data = $this->getBaseDataFromObject($object);
 		if($object->userId)
@@ -138,34 +137,48 @@ class board_dao extends base_dao
 		return $data;
 	}
 	
-	public function getTasksForBoardUserId($boardUserId)
+	public function getBoardsForUserId($userId)
 	{
-		$tasks = array();
-
-		$tasksQuery = $this->db->query(
-										"SELECT t.id, bt.id as taskBoardId, t.name, t.createdBy, ".
-										"t.dateCreated, t.updatedBy, t.dateUpdated, ".
-										"t.deleted, bt.status, bt.sortOrder ".
-										"FROM Task t INNER JOIN board_task bt on t.id = bt.taskId ".
-										"AND bt.boardUserId = ".$boardUserId
+		$boards = array();
+		$boardQuery = $this->db->query(
+										"SELECT b.id, ub.id as userBoardId, b.id, b.name, b.createdBy, b.dateCreated, b.updatedBy, b.dateUpdated, ub.deleted ".
+										"FROM board b INNER JOIN user_board ub on b.id = ub.boardId ".
+										"AND ub.userId = ".$userId.
+										" AND (ub.deleted is NULL || ub.deleted = 0)"
 										);
-		
-		if($tasksQuery->num_rows() > 0)
-		{			
-			foreach($tasksQuery->result() as $taskRow)
+										
+		if ($boardQuery->num_rows() > 0)
+		{
+			$taskDao = new task_dao();
+			foreach ($boardQuery->result() as $boardRow)
 			{
-				$task = new task_vo();
-				$task = $this->setBaseProperties($task, $taskRow);
-				$task->name = $taskRow->name;
-				$task->status = $taskRow->status;
-				$task->sortOrder = $taskRow->sortOrder;
-				$task->taskBoardId = $taskRow->taskBoardId;
-				array_push($tasks, $task);
+				$board = new board_vo();
+				$board = $this->setBaseProperties($board, $boardRow);
+				$board->name = $boardRow->name;				
+				$board->userBoardId = $boardRow->userBoardId;
+				$board->tasks = $taskDao->getTasksForUserBoardId($board->userBoardId);				
+				array_push($boards, $board);			
 			}
 		}
-		return $tasks;
+		
+		return $boards;
 	}
-	
+
+	public function deleteUserBoard($id)
+	{
+		$board = new board_vo();
+		$board->id = $id;
+		$board->deleted = 1;
+		$board->dateUpdated = time();
+		
+		$this->db->where('id', $board->id);
+		$result = new Result();
+		$result->status = $this->db->update($this->userBoardTable, $this->getDataFromObject($board));
+		$result->data = $board;
+
+		return $result;
+		
+	}
 		
 	
 }

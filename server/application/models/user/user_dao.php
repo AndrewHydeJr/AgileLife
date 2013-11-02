@@ -27,8 +27,7 @@ class user_dao extends base_dao
 		
 		$result = new result();
 		
-		$this->db->trans_start();
-				
+		$this->db->trans_start();				
 		$result->status = $this->db->insert($this->tableName, $this->getDataFromObject($user));
 		$user->id = $this->db->insert_id();
 		
@@ -63,17 +62,12 @@ class user_dao extends base_dao
 		$result = new result();
 		
 		$query = $this->db->get($this->tableName);
+		$result->data = $query;
 		if ($query->num_rows() > 0)
-		{
-			$result->data = $query;
 			$result->status = 1;
-		}
 		else
-		{
-			$result->data = array();
 			$result->status = 0;
-		}	
-
+		
 		return $result;
 	}
 	
@@ -89,41 +83,12 @@ class user_dao extends base_dao
 			foreach ($userQuery->result() as $row)
 			{				
 				$user = $userDao->setBaseProperties($user, $row);
-				$user->name = $row->name;
-				$user->boards = $this->getBoardsForUserId($user->id);
+				$user->name = $row->name;				
 				break;
 			}
 		}
 		return $user;
 	}
-	
-	public function getBoardsForUserId($userId)
-	{
-		$boards = array();
-		$boardQuery = $this->db->query(
-										"SELECT b.id, ub.id as boardUserId, b.id, b.name, b.createdBy, b.dateCreated, b.updatedBy, b.dateUpdated, b.deleted ".
-										"FROM board b INNER JOIN user_board ub on b.id = ub.boardId ".
-										"AND ub.userId = ".$userId
-										);
-										
-		if ($boardQuery->num_rows() > 0)
-		{
-			$boardDao = new board_dao();
-			foreach ($boardQuery->result() as $boardRow)
-			{
-				$board = new board_vo();
-				$board = $this->setBaseProperties($board, $boardRow);
-				$board->name = $boardRow->name;				
-				$board->boardUserId = $boardRow->boardUserId;
-				$board->tasks = $boardDao->getTasksForBoardUserId($board->boardUserId);				
-				array_push($boards, $board);			
-			}
-		}
-		
-		return $boards;
-	}
-	
-	
 	
 	public function delete($id)
 	{

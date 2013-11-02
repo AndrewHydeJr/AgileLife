@@ -3,7 +3,7 @@ class board_vo extends base_vo
 {
 	public $name;
 	public $tasks;
-	public $boardUserId;
+	public $userBoardId;
 	
 	
 	public function __construct() 

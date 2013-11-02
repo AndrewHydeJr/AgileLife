@@ -2,7 +2,7 @@
 
 class task_board_vo extends base_vo
 {
-	public $boardUserId;
+	public $userBoardId;
 	public $taskId;
 	public $status;
 	public $sortOrder;	

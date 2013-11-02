@@ -12,6 +12,10 @@ class task extends CI_Controller {
 		$this->load->model("task/task_dao");
 		$this->load->model("task/task_delegate");
 		$this->load->model("task/task_board_vo");
+		$this->load->model("board/board_vo");
+		$this->load->model('board/board_user_vo');
+		$this->load->model("board/board_dao");
+		$this->load->model("board/board_delegate");
 		$this->load->model("Utils");
 		$this->load->model("Result");
 	}
@@ -21,35 +25,8 @@ class task extends CI_Controller {
 		
 	}
 		
-	public function save($task=null)
+	public function save()
 	{		
-		$taskDao = new TaskDao();
-		if($task)
-		{
-			return $taskDao->save($task);
-		}
-		else
-		{
-			//get values from post params
-		}
-		
-	}
-	
-	public function fetch()
-	{
-		$taskDao = new TaskDao();
-		return $taskDao->fetch();		
-	}
-	
-	
-	public function delete($id)
-	{
-		$taskDao = new TaskDao();
-		return $taskDao->delete($id);
-	}
-	
-	public function saveToBoard()
-	{
 		$taskDelegate = new task_delegate();
 		$jsonData = $this->input->get_post("jsonData");
 		$data = json_decode($jsonData);
@@ -63,10 +40,10 @@ class task extends CI_Controller {
 		}
 		
 		$task = new task_vo();		
-		$boardId = 0;
+		$userBoardId = 0;
 		
-		if(isset($data->boardId))
-			$task->boardId = $data->boardId;
+		if(isset($data->userBoardId))
+			$userBoardId = $data->userBoardId;
 		
 		if(isset($data->id))
 			$task->id = $data->id;
@@ -74,8 +51,8 @@ class task extends CI_Controller {
 		if(isset($data->name))
 			$task->name = $data->name;
 			
-		if(isset($data->taskBoardId))
-			$task->taskBoardId = $data->taskBoardId;
+		if(isset($data->boardTaskId))
+			$task->boardTaskId = $data->boardTaskId;
 			
 		if(isset($data->status))
 			$task->status = $data->status;
@@ -83,11 +60,37 @@ class task extends CI_Controller {
 		if(isset($data->sortOrder))
 			$task->sortOrder = $data->sortOrder;	
 		
-		$result = $taskDelegate->saveTaskForBoard($task, $boardId);
+		$result = $taskDelegate->saveTaskForBoard($task, $userBoardId);
 
 		$viewData["json"] = $result;
 		
-		$this->load->view('json_display', $viewData);		
+		$this->load->view('json_display', $viewData);
+	}
+	
+	public function fetch()
+	{
+		$taskDelegate = new task_delegate();
+		return $taskDelegate->fetch();		
+	}
+	
+	
+	public function delete($boardTaskId)
+	{
+		$taskDelegate = new task_delegate();
+		$result = $taskDelegate->delete($boardTaskId);
+		$viewData["json"] = $result;
+		
+		$this->load->view('json_display', $viewData);	
+	}
+	
+	public function fetchTasksForuserBoardId($userBoardId)
+	{
+		$taskDelegate = new task_delegate();
+		$result = $taskDelegate->getTasksForUserBoardId($userBoardId);
+				
+		$viewData["json"] = $result;
+		
+		$this->load->view('json_display', $viewData);	
 	}
 	
 	

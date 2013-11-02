@@ -22,26 +22,10 @@ class board extends CI_Controller {
 
 	public function index()
 	{
-		//$this->load->view('welcome_message');
-		
-		
+
 	}
-	
-	public function save($board=null)
-	{		
-		$boardDao = new BoardDao();
-		if($board)
-		{
-			return $boardDao->save($board);
-		}
-		else
-		{
-			//get values from post params
-		}
 		
-	}
-	
-	public function saveForUser()
+	public function save()
 	{
 		$boardDelegate = new board_delegate();
 		$jsonData = $this->input->get_post("jsonData");
@@ -61,8 +45,8 @@ class board extends CI_Controller {
 		if(isset($data->userId))
 			$userId = $data->userId;
 		
-		if(isset($data->boardUserId))
-			$board->boardUserId = $data->boardUserId;
+		if(isset($data->userBoardId))
+			$board->userBoardId = $data->userBoardId;
 		
 		if(isset($data->id))
 			$board->id = $data->id;
@@ -70,7 +54,7 @@ class board extends CI_Controller {
 		if(isset($data->name))
 			$board->name = $data->name;
 			
-		$result = $boardDelegate->saveBoardForUser($userId, $board);
+		$result = $boardDelegate->saveUserBoard($userId, $board);
 
 		$viewData["json"] = $result;
 		
@@ -79,30 +63,29 @@ class board extends CI_Controller {
 		
 	public function fetch()
 	{
-		$boardDao = new BoardDao();
-		return $boardDao->fetch();		
+		$boardDelegate = new board_delegate();
+		return $boardDelegate->fetch();		
 	}
 	
-	public function delete($id)
+	public function delete($userBoardId)
 	{
-		$boardDao = new board_dao();
-		return $boardDao->delete($id);
+		$boardDelegate = new board_delegate();
+		$result = $boardDelegate->deleteUserBoard($userBoardId);
+		
+		$data["json"] = $result;
+		
+		$this->load->view('json_display', $data);
 	}
 	
-	public function saveTaskForBoard($task, $boardId)
+	public function fetchBoardsForUserId($userId)
 	{
-		if($boardId)
-		{
-			$taskDao = new task_dao();			
-			$result = $taskDao->save($task);
-			$task->id = $result->data->id;
-			
-			$boardDao = new board_dao();
-			$result = $taskDao->saveTaskBoard($task, $boardId);
-			
-			return $result;
-		}
-
-	}	
+		$boardDelegate = new board_delegate();
+		$boards = $boardDelegate->getBoardsForUserId($userId);
+		
+		$data["json"] = $boards;
+		
+		$this->load->view('json_display', $data);
+	}
+	
 			
 }
